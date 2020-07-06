@@ -20,26 +20,49 @@ namespace Module2.Controllers
         {
             productsDbContext = _productsDbContext;
         }
-
+        
+        
         // GET: api/<ProductsController>
         [HttpGet]
-        public IEnumerable<Products> Get(string sortPrice)
-        {
-            IQueryable<Products> products;
-            switch (sortPrice)
-            {
-                case "desc":
-                    products = productsDbContext.Products.OrderByDescending(p => p.Product_Price);
-                    break;
-                case "asc":
-                    products = productsDbContext.Products.OrderBy(p => p.Product_Price);
-                    break;
-                default:
-                    products = productsDbContext.Products;
-                    break;
-            }
+        //public IEnumerable<Products> Get(string sort)
+        //{
+        //    IQueryable<Products> products;
+        //    switch (sort)
+        //    {
+        //        case "desc_Price":
+        //            products = productsDbContext.Products.OrderByDescending(p => Convert.ToDecimal(p.Product_Price));
+        //            break;
+        //        case "asc_Price":
+        //            products = productsDbContext.Products.OrderBy(p => Convert.ToDecimal(p.Product_Price));
+        //            break;
+        //        case "desc_Id":
+        //            products = productsDbContext.Products.OrderByDescending(p => p.Product_Id);
+        //            break;
+        //        case "asc_Id":
+        //            products = productsDbContext.Products.OrderBy(p => p.Product_Id);
+        //            break;
+        //        default:
+        //            products = productsDbContext.Products;
+        //            break;
+        //    }
 
-            return products;
+        //    return products;
+        //}
+        //Pagination in API's
+        //public IEnumerable<Products> Get_Pagination(int? pageNumber, int? pageSize)
+        //{
+        //    var products = from p in productsDbContext.Products.OrderBy(a => a.Product_Id) select p;
+        //    var defaultPage = pageNumber ?? 1;
+        //    var defaultSize = pageSize ?? 2;
+        //    var items = products.Skip((defaultPage - 1) * defaultSize).Take(defaultSize).ToList();
+        //    return items;
+        //}
+
+        //Search in API's
+        public IEnumerable<Products> Get_Pagination(string search)
+        {
+            var items = productsDbContext.Products.Where(p => p.Product_Name.StartsWith(search));
+            return items;
         }
 
         // GET api/<ProductsController>/5
