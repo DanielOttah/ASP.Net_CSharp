@@ -59,7 +59,7 @@ namespace Module2.Controllers
         //}
 
         //Search in API's
-        public IEnumerable<Products> Get_Pagination(string search)
+        public IEnumerable<Products> Get_Search(string search)
         {
             var items = productsDbContext.Products.Where(p => p.Product_Name.StartsWith(search));
             return items;

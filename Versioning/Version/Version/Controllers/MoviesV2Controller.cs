@@ -10,7 +10,8 @@ using Version.Models;
 namespace Version.Controllers
 {
     [ApiVersion("2.0")]
-    [Route("api/movies")]
+    //[Route("api/movies")] // Versioning via normal route
+    [Route("api/v{version:apiVersion}/movies")] // Versioning via URL
     [ApiController]
     public class MoviesV2Controller : ControllerBase
     {
