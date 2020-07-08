@@ -20,7 +20,7 @@ namespace RepoPattern.Controllers
         private IProducts productsRepo;
         public ProductsController(IProducts _productsRepo)
         {
-            productsRepo = _productsRepo ?? throw new ArgumentNullException(nameof(_productsRepo));
+            productsRepo = _productsRepo;
         }
 
         // GET: api/<ProductsController>

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Module2.Data;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 
 namespace Module2
@@ -31,7 +32,11 @@ namespace Module2
         {
             services.AddControllers();
             services.AddDbContext<ProductsDbContext>(option =>option.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog=ProductsDb"));
-                      
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +46,13 @@ namespace Module2
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
 
             productsDbContext.Database.EnsureCreated();
             app.UseHttpsRedirection();
